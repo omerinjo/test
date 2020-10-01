@@ -1,26 +1,35 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "webShop",
+    "password": "root",
+    "database": "clothes",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "define": {
+      "timestamps": false
+    }
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "webShop",
+    "password": "root",
+    "database": "clothes",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "define": {
+      "timestamps": false
+    }
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "webShop",
+    "password": "root",
+    "database": "clothes",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "define": {
+      "timestamps": false
+    }
   }
 }

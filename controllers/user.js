@@ -5,12 +5,17 @@ const { User, Product, ProductState, Color, Size, ShoppingCart } = require('../m
 
 module.exports = {
     signUp: async (req, res, next) => {
+        console.log("request   ", req.body)
         var record = {
-            name: req.body.name,
-            address: req.body.address,
+            role: req.body.role,
+            username: req.body.username,
+            email: req.body.lastName,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             password: await bcrypt.hashSync(req.body.password, 10),
         }
-        User.findOne({ where: { name: req.body.name } }).then(user => {
+        console.log("rekord ", record)
+        User.findOne({ where: { username: req.body.username } }).then(user => {
             if (!user) {
                 User.create(record).then(registered => {
                     res.status(200).json({ status: 200, message: 'User registered.' });
@@ -22,7 +27,7 @@ module.exports = {
                 });
             }
             else {
-                return res.status(200).json({ msg: `User ${record.name} already exists!` })
+                return res.status(200).json({ msg: `User ${record.username} already exists!` })
             }
         })
     },
@@ -51,47 +56,54 @@ module.exports = {
             res.json({ msg: "Password or Name is incorrect" })
         }
     },
-    getProduct: async (req, res, next) => {
 
-        let page = parseInt(req.params.page) || 0;
-        let limit = parseInt(req.params.limit) || 100;
-        let offset = page * limit;
+    getAllUsers: async (req, res, next) => {
 
-        var productList = await Product.findAndCountAll({
-            limit: limit,
-            offset: offset,
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            },
-            include: [{
-                model: Color,
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
-            },
-            {
-                model: Size,
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
-            },
-            {
-                model: ProductState,
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
-            }
-            ]
-        })
-        return res.status(200).json(productList)
-    },
-
-    addToCart: async (req, res, next) => {
-        const record = {
-            userId: req.user.id,
-            productId: req.body.product
-        }
-        await ShoppingCart.create(record);
-        return res.status(200).json({ msg: "add" })
+        var users = await User.findAll()
+        console.log("user ", users)
+        return res.status(200).json({ users })
     }
+    // getProduct: async (req, res, next) => {
+
+    //     let page = parseInt(req.params.page) || 0;
+    //     let limit = parseInt(req.params.limit) || 100;
+    //     let offset = page * limit;
+
+    //     var productList = await Product.findAndCountAll({
+    //         limit: limit,
+    //         offset: offset,
+    //         attributes: {
+    //             exclude: ['createdAt', 'updatedAt']
+    //         },
+    //         include: [{
+    //             model: Color,
+    //             attributes: {
+    //                 exclude: ['createdAt', 'updatedAt']
+    //             }
+    //         },
+    //         {
+    //             model: Size,
+    //             attributes: {
+    //                 exclude: ['createdAt', 'updatedAt']
+    //             }
+    //         },
+    //         {
+    //             model: ProductState,
+    //             attributes: {
+    //                 exclude: ['createdAt', 'updatedAt']
+    //             }
+    //         }
+    //         ]
+    //     })
+    //     return res.status(200).json(productList)
+    // },
+
+    // addToCart: async (req, res, next) => {
+    //     const record = {
+    //         userId: req.user.id,
+    //         productId: req.body.product
+    //     }
+    //     await ShoppingCart.create(record);
+    //     return res.status(200).json({ msg: "add" })
+    // }
 }

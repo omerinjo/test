@@ -6,14 +6,16 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true
         },
-        name: DataTypes.STRING(255),
-        address: DataTypes.STRING(255),
+        firstName: DataTypes.STRING(255),
+        lastName: DataTypes.STRING(255),
+        email: DataTypes.STRING,
+        username: DataTypes.STRING,
         password: DataTypes.STRING,
-        userRoleId: DataTypes.INTEGER,
+        role: DataTypes.STRING,
     }, { tableName: 'user' });
     User.associate = function (models) {
-        User.hasMany(models.ShoppingCart, { foreignKey: "userId" })
-        User.hasOne(models.UserRole, { foreignKey: "userRoleId" })
+        //  User.hasMany(models.ShoppingCart, { foreignKey: "userId" })
+        // User.hasOne(models.UserRole, { foreignKey: "userRoleId" })
     }
     return User;
 };

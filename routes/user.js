@@ -15,15 +15,15 @@ router.post('/login',
     userCtr.login)
 
 
-router.get('/getallproducts',
-    passport.authenticate('jwt', { session: false }),
-    userCtr.getProduct
+router.get('/allusers',
+    // passport.authenticate('jwt', { session: false }),
+    userCtr.getAllUsers
 )
 
-router.post('/cart',
-    passport.authenticate('jwt', { session: false }),
-    userCtr.addToCart
-)
+// router.post('/cart',
+//     passport.authenticate('jwt', { session: false }),
+//     userCtr.addToCart
+// )
 
 // router.post('/login',
 //     validate(schema.login),
